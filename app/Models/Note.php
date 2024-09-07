@@ -9,5 +9,15 @@ class Note extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['authorization', 'signature'];
+    protected $fillable = [
+        'proses', 
+        'atas_nama',
+        'kendaraan',
+        'no_polisi',
+        'keterangan',
+        'stnk_resmi',
+        'jasa',
+        'lain-lain',
+        'total'
+    ];
 }

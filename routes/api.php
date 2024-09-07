@@ -26,4 +26,7 @@ Route::group([
     });
   });
   
-Route::post('header', [HeaderController::class,'createHeader']);
+
+  Route::middleware('auth.basic')->group(function () {
+    Route::post('header', [HeaderController::class,'createHeader']);
+  });

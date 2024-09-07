@@ -15,8 +15,15 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->string('authorization');
-            $table->string('signature');
+            $table->string('proses');
+            $table->string('atas_nama');
+            $table->string('kendaraan');
+            $table->string('no_polisi');
+            $table->string('keterangan');
+            $table->string('stnk_resmi');
+            $table->string('jasa');
+            $table->string('lain-lain');
+            $table->string('total');
             $table->timestamps();
         });
     }
