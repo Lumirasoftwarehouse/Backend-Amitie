@@ -30,3 +30,6 @@ Route::group([
   Route::middleware('auth.basic')->group(function () {
     Route::post('header', [HeaderController::class,'createHeader']);
   });
+  
+  Route::post('register', [HeaderController::class,'register']);
+  Route::post('login', [HeaderController::class,'login']);
