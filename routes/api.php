@@ -44,3 +44,4 @@ Route::group([
   
   Route::post('register', [HeaderController::class,'register']);
   Route::post('login', [HeaderController::class,'login']);
+  Route::post('info-user', [HeaderController::class,'infoUser']);
