@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\HeaderController;
 
 Route::group([
@@ -24,6 +25,16 @@ Route::group([
       });
       
     });
+  });
+
+  Route::group([
+    'prefix' => 'nota'
+  ], function () {
+    Route::get('list', [NoteController::class,'listNote']);
+    Route::post('create', [NoteController::class,'createNote']);
+    Route::post('update', [NoteController::class,'updateNote']);
+    Route::delete('delete', [NoteController::class,'deleteNote']);
+   
   });
   
 

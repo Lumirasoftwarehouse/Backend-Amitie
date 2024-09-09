@@ -17,7 +17,7 @@ class Note extends Model
         'keterangan',
         'stnk_resmi',
         'jasa',
-        'lain-lain',
+        'lain_lain',
         'total'
     ];
 }

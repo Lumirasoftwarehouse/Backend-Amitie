@@ -22,7 +22,7 @@ class CreateNotesTable extends Migration
             $table->string('keterangan');
             $table->string('stnk_resmi');
             $table->string('jasa');
-            $table->string('lain-lain');
+            $table->string('lain_lain');
             $table->string('total');
             $table->timestamps();
         });
