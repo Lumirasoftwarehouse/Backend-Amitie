@@ -100,7 +100,7 @@ class HeaderController extends Controller
     public function login(Request $request)
     {
         $validateData= $request->validate([
-            'nik' => 'required',
+            'user' => 'required',
             'pass' => 'required',
         ]);
         // Inisialisasi Guzzle Client
@@ -124,7 +124,7 @@ class HeaderController extends Controller
         ];
         // Data yang akan dikirim
         $fields = [
-            'nik' => $validateData['nik'],
+            'user' => $validateData['user'],
             'pass' =>  sha1($validateData['pass'])
         ];
     
