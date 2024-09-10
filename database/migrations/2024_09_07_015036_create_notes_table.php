@@ -15,6 +15,9 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
+            $table->string('alamat');
+            $table->date('tanggal');
+            $table->string('pelanggan');
             $table->string('proses');
             $table->string('atas_nama');
             $table->string('kendaraan');

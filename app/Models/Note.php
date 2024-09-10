@@ -10,6 +10,9 @@ class Note extends Model
     use HasFactory;
 
     protected $fillable = [
+        'alamat',
+        'tanggal',
+        'pelanggan',
         'proses', 
         'atas_nama',
         'kendaraan',

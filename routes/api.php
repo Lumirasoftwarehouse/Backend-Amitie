@@ -33,7 +33,7 @@ Route::group([
     Route::get('list', [NoteController::class,'listNote']);
     Route::post('create', [NoteController::class,'createNote']);
     Route::post('update', [NoteController::class,'updateNote']);
-    Route::delete('delete', [NoteController::class,'deleteNote']);
+    Route::delete('delete/{id}', [NoteController::class,'deleteNote']);
    
   });
   
@@ -45,3 +45,6 @@ Route::group([
   Route::post('register', [HeaderController::class,'register']);
   Route::post('login', [HeaderController::class,'login']);
   Route::post('info-user', [HeaderController::class,'infoUser']);
+  Route::post('list-kota', [HeaderController::class,'listKota']);
+  Route::post('list-kec', [HeaderController::class,'listKec']);
+  Route::post('list-kel', [HeaderController::class,'listKel']);
