@@ -48,3 +48,5 @@ Route::group([
   Route::post('list-kota', [HeaderController::class,'listKota']);
   Route::post('list-kec', [HeaderController::class,'listKec']);
   Route::post('list-kel', [HeaderController::class,'listKel']);
+
+  Route::post('list-surat', [HeaderController::class,'listSurat']);
