@@ -49,4 +49,5 @@ Route::group([
   Route::post('list-kec', [HeaderController::class,'listKec']);
   Route::post('list-kel', [HeaderController::class,'listKel']);
 
+  Route::post('info-surat', [HeaderController::class,'infoSurat']);
   Route::post('list-surat', [HeaderController::class,'listSurat']);
