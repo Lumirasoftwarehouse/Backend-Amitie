@@ -10,9 +10,6 @@ class Note extends Model
     use HasFactory;
 
     protected $fillable = [
-        'alamat',
-        'tanggal',
-        'pelanggan',
         'proses', 
         'atas_nama',
         'kendaraan',
@@ -21,6 +18,13 @@ class Note extends Model
         'stnk_resmi',
         'jasa',
         'lain_lain',
-        'total'
+        'total',
+        'pelanggan_id'
     ];
+
+    // Relasi many-to-one dengan Pelanggan
+    public function pelanggan()
+    {
+        return $this->belongsTo(Pelanggan::class);
+    }
 }

@@ -4,15 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Note;
+use App\Models\Pelanggan;
 
 class NoteController extends Controller
 {
+    public function exportPdf($id)
+    {
+        // Ambil data pelanggan beserta nota-nya
+        $pelanggans = Pelanggan::with('notes')->find($id);
+    
+        // Cek jika pelanggan ditemukan
+        if (!$pelanggans) {
+            return response()->json(['message' => 'Pelanggan not found'], 404);
+        }
+    
+        // Render view ke dalam PDF dengan orientasi landscape dan ukuran kertas A4
+        $pdf = \PDF::loadView('pdf.pelanggan', compact('pelanggans'))
+                    ->setPaper('a4', 'landscape');
+    
+        // Kembalikan file PDF sebagai download
+        return $pdf->download('pelanggan_'.$pelanggans->id.'.pdf');
+    }
+    
+
     // Menampilkan semua catatan
     public function listNote()
     {
-        $dataNotes = Note::get();
+        // $dataNotes = Note::get();
+        $pelanggans = Pelanggan::with('notes')->get();
 
-        return response()->json(['message' => 'success', 'data' => $dataNotes]);
+        return response()->json(['message' => 'success', 'data' => $pelanggans]);
     }
 
     // Fungsi untuk menambah catatan (Insert)
@@ -20,10 +41,8 @@ class NoteController extends Controller
     {
         // Validasi untuk menerima array input
         $validateData = $request->validate([
+            'header' => 'required',
             'notes' => 'required|array',
-            'notes.*.alamat' => 'required',
-            'notes.*.tanggal' => 'required',
-            'notes.*.pelanggan' => 'required',
             'notes.*.proses' => 'required',
             'notes.*.atas_nama' => 'required',
             'notes.*.kendaraan' => 'required',
@@ -33,13 +52,15 @@ class NoteController extends Controller
             'notes.*.jasa' => 'required',
             'notes.*.lain_lain' => 'required'
         ]);
-    
+
+        $pelanggan = new Pelanggan();
+        $pelanggan->alamat = $validateData['header']['alamat'];
+        $pelanggan->tanggal = $validateData['header']['tanggal'];
+        $pelanggan->nama_pelanggan = $validateData['header']['pelanggan'];
+        $pelanggan->save();
         // Iterasi melalui array notes untuk menyimpan beberapa Note
         foreach ($validateData['notes'] as $noteData) {
             Note::create([
-                'alamat' => $noteData['alamat'],
-                'tanggal' => $noteData['tanggal'],
-                'pelanggan' => $noteData['pelanggan'],
                 'proses' => $noteData['proses'],
                 'atas_nama' => $noteData['atas_nama'],
                 'kendaraan' => $noteData['kendaraan'],
@@ -49,6 +70,7 @@ class NoteController extends Controller
                 'jasa' => $noteData['jasa'],
                 'lain_lain' => $noteData['lain_lain'],
                 'total' => $noteData['jasa'] + $noteData['lain_lain'], // Perhitungan total
+                'pelanggan_id' => $pelanggan->id
             ]);
         }
     
@@ -113,6 +135,21 @@ class NoteController extends Controller
         $note->delete();
 
         return response()->json(['message' => 'Note deleted successfully']);
+    }
+
+    public function deletePelanggan($id)
+    {
+        // Cari pelanggan berdasarkan id
+        $pelanggan = Pelanggan::find($id);
+
+        if (!$pelanggan) {
+            return response()->json(['message' => 'Pelanggan not found'], 404);
+        }
+
+        // Hapus catatan
+        $pelanggan->delete();
+
+        return response()->json(['message' => 'Pelanggan deleted successfully']);   
     }
 }
 

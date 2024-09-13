@@ -15,9 +15,6 @@ class CreateNotesTable extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
-            $table->string('alamat');
-            $table->date('tanggal');
-            $table->string('pelanggan');
             $table->string('proses');
             $table->string('atas_nama');
             $table->string('kendaraan');
@@ -27,6 +24,7 @@ class CreateNotesTable extends Migration
             $table->string('jasa');
             $table->string('lain_lain');
             $table->string('total');
+            $table->foreignId('pelanggan_id')->constrained('pelanggans')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
