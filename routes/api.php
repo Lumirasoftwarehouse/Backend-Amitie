@@ -52,3 +52,4 @@ Route::group([
   Route::post('info-surat', [HeaderController::class,'infoSurat']);
   Route::post('entri-surat', [HeaderController::class,'entriSurat']);
   Route::post('list-surat', [HeaderController::class,'listSurat']);
+  Route::post('status-surat', [HeaderController::class,'statusSurat']);
