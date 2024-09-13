@@ -69,7 +69,7 @@ class NoteController extends Controller
                 'stnk_resmi' => $noteData['stnk_resmi'],
                 'jasa' => $noteData['jasa'],
                 'lain_lain' => $noteData['lain_lain'],
-                'total' => $noteData['jasa'] + $noteData['lain_lain'], // Perhitungan total
+                'total' => $noteData['stnk_resmi'] + $noteData['jasa'] + $noteData['lain_lain'], // Perhitungan total
                 'pelanggan_id' => $pelanggan->id
             ]);
         }
