@@ -567,4 +567,82 @@ class HeaderController extends Controller
             ], 500);
         }
     }
+
+    public function statusSurat(Request $request)
+    {
+        $validateData = $request->validate([
+            'iddevice' => 'required',
+            'token' => 'required',
+            'noentri' => 'required',
+            'kdsamsat' => 'required',
+            'status' => 'required',
+            'ket' => 'required',
+            'nik' => 'required',
+            'nohp' => 'required',
+            'email' => 'required',
+            'lat' => 'required',
+            'lng' => 'required',
+            'img' => 'required',
+        ]);
+        // Inisialisasi Guzzle Client
+        $client = new Client();    
+        // Ambil username dan password dari .env
+        $username = env('USERNAME_AUTH', 'default_username'); // Sesuaikan dengan default jika diperlukan
+        $password = env('PASSWORD_AUTH', 'default_password'); // Sesuaikan dengan default jika diperlukan
+        // Membuat signature berdasarkan format YYYYusernameMMpasswordDD
+        $now = now(); // Mengambil waktu sekarang
+        $YYYY = $now->format('Y');
+        $MM = $now->format('m');
+        $DD = $now->format('d');
+        $signature = sha1($YYYY . $username . $MM . $password . $DD);
+    
+        $headers = [
+            'Signature' => $signature,
+            'Authorization' => 'Basic ' . base64_encode($username . ':' . $password),
+            'Content-Type' => 'application/x-www-form-urlencoded',
+        ];
+
+        // Data yang akan dikirim
+        $fields = [
+            'iddevice' =>  $validateData['iddevice'],
+            'token' =>  $validateData['token'],
+            'noentri' =>  $validateData['noentri'],
+            'kdsamsat' =>  $validateData['kdsamsat'],
+            'status' =>  $validateData['status'],
+            'ket' =>  $validateData['ket'],
+            'nik' =>  $validateData['nik'],
+            'nohp' =>  $validateData['nohp'],
+            'lat' =>  $validateData['lat'],
+            'lng' =>  $validateData['lng'],
+            'img' =>  $validateData['img']
+        ];
+    
+        try {
+            // Mengirimkan request GET dengan multipart
+            $response = $client->post('https://siappws.dipendajatim.go.id/pemda/index.php/surat/status', [
+                'headers' => $headers,
+                'form_params' => $fields
+            ]);
+    
+            // Mendapatkan response body
+            $responseBody = $response->getBody()->getContents();
+    
+            if ($response->getStatusCode() == 200) {
+                return response()->json([
+                    'status' => 'Sukses',
+                    'body' => json_decode($responseBody)
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 'Gagal',
+                    'message' => $responseBody,
+                ], $response->getStatusCode());
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'Gagal',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
 }
