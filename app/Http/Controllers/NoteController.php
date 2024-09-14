@@ -19,11 +19,18 @@ class NoteController extends Controller
         }
     
         // Render view ke dalam PDF dengan orientasi landscape dan ukuran kertas A4
-        $pdf = \PDF::loadView('pdf.pelanggan', compact('pelanggans'))
-                    ->setPaper('a4', 'landscape');
+        $pdf = \PDF::loadView('pdf.pelanggan', compact('pelanggans'));
     
         // Kembalikan file PDF sebagai download
         return $pdf->download('pelanggan_'.$pelanggans->id.'.pdf');
+    }
+
+    public function detailNota($id)
+    {
+        // Ambil data pelanggan beserta nota-nya
+        $pelanggans = Pelanggan::with('notes')->find($id);
+    
+        return response()->json(['message' => 'berhasil', 'data' => $pelanggans], 200);
     }
     
 
@@ -69,7 +76,7 @@ class NoteController extends Controller
                 'stnk_resmi' => $noteData['stnk_resmi'],
                 'jasa' => $noteData['jasa'],
                 'lain_lain' => $noteData['lain_lain'],
-                'total' => $noteData['stnk_resmi'] + $noteData['jasa'] + $noteData['lain_lain'], // Perhitungan total
+                'total' => $noteData['total'], // Perhitungan total
                 'pelanggan_id' => $pelanggan->id
             ]);
         }

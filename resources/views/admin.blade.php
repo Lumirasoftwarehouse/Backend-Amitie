@@ -38,11 +38,42 @@
 </head>
 
     <body class="antialiased">
-        <div class="wrapper">
-            <div id="app">
-                <router-view><router-view/>
+    <div class="container mt-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center mb-4">
+                    <h1 class="h3">Data Pelanggan: {{ $pelanggans->nama_pelanggan }}</h1>
+                    <p class="mb-1">Alamat: {{ $pelanggans->alamat }}</p>
+                    <p>Tanggal: {{ $pelanggans->tanggal }}</p>
+                </div>
+
+                <h2 class="h4 mb-3">Daftar Nota</h2>
+                @foreach ($pelanggans->notes as $key => $note)
+                <div class="row border-bottom pb-3 mb-3 nota-item">
+                    <!-- kiri -->
+                    <div class="col-6">
+                        <div><span>Proses:</span> {{ $note->proses }}</div>
+                        <div><span>Atas Nama:</span> {{ $note->atas_nama }}</div>
+                        <div><span>Kendaraan:</span> {{ $note->kendaraan }}</div>
+                        <div><span>No Polisi:</span> {{ $note->no_polisi }}</div>
+                        <div><span>Keterangan:</span> {{ $note->keterangan }}</div>
+                    </div>
+                    <!-- kanan -->
+                    <div class="col-6">
+                        <div><span>STNK Resmi:</span> Rp {{ number_format($note->stnk_resmi, 0, ',', '.') }}</div>
+                        <div><span>Jasa:</span> Rp {{ number_format($note->jasa, 0, ',', '.') }}</div>
+                        <div><span>Lain-lain:</span> Rp {{ number_format($note->lain_lain, 0, ',', '.') }}</div>
+                        <div><span>Total:</span> Rp {{ number_format($note->total, 0, ',', '.') }}</div>
+                    </div>
+                </div>
+                @endforeach
+
+                <div class="text-end mt-4">
+                    <h3 class="h5">Jumlah Keseluruhan: Rp {{ number_format($pelanggans->notes->sum('total'), 0, ',', '.') }}</h3>
+                </div>
             </div>
         </div>
+    </div>
 
 
 
@@ -75,45 +106,6 @@
                 once: true,
             });
         </script>
-
-
-        <!-- Histats.com  START  (aync)-->
-        <script type="text/javascript">var _Hasync= _Hasync|| [];
-        _Hasync.push(['Histats.start', '1,4700283,4,0,0,0,00010000']);
-        _Hasync.push(['Histats.fasi', '1']);
-        _Hasync.push(['Histats.track_hits', '']);
-        (function() {
-        var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
-        hs.src = ('//s10.histats.com/js15_as.js');
-        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
-        })();</script>
-        <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?4700283&101" alt="" border="0"></a></noscript>
-        <!-- Histats.com  END  -->
-
-        <!-- Google Tag Manager -->
-        <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-        })(window,document,'script','dataLayer','GTM-NT8V82B');</script>
-        <!-- End Google Tag Manager -->
-
-        <!-- Google tag (gtag.js) -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11180841020"></script>
-        <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'AW-11180841020');
-        </script>
-
-        <!-- Event snippet for Button WA (1) conversion page -->
-        <script>
-        gtag('event', 'conversion', {'send_to': 'AW-11180841020/z-WGCMu4q6EYELywuNMp'});
-        </script>
-
-
                 
     </body>
 

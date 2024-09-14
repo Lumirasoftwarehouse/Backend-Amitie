@@ -32,6 +32,7 @@ Route::group([
   ], function () {
     Route::get('export/{id}', [NoteController::class,'exportPdf']);
     Route::get('list', [NoteController::class,'listNote']);
+    Route::get('detail/{id}', [NoteController::class,'detailNota']);
     Route::post('create', [NoteController::class,'createNote']);
     Route::post('update', [NoteController::class,'updateNote']);
     Route::delete('delete/{id}', [NoteController::class,'deleteNote']);
