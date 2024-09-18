@@ -22,7 +22,10 @@ class CreateNotesTable extends Migration
             $table->string('keterangan');
             $table->string('stnk_resmi');
             $table->string('jasa');
-            $table->string('lain_lain');
+            $table->string('lain_1')->nullable();
+            $table->string('lain_2')->nullable();
+            $table->string('lain_3')->nullable();
+            $table->string('lain_4')->nullable();
             $table->string('total');
             $table->foreignId('pelanggan_id')->constrained('pelanggans')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

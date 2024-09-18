@@ -57,7 +57,10 @@ class NoteController extends Controller
             'notes.*.keterangan' => 'required',
             'notes.*.stnk_resmi' => 'required',
             'notes.*.jasa' => 'required',
-            'notes.*.lain_lain' => 'required'
+            'notes.*.lain_1' => 'required',
+            'notes.*.lain_2' => 'required',
+            'notes.*.lain_3' => 'required',
+            'notes.*.lain_4' => 'required'
         ]);
 
         $pelanggan = new Pelanggan();
@@ -75,7 +78,10 @@ class NoteController extends Controller
                 'keterangan' => $noteData['keterangan'],
                 'stnk_resmi' => $noteData['stnk_resmi'],
                 'jasa' => $noteData['jasa'],
-                'lain_lain' => $noteData['lain_lain'],
+                'lain_1' => $noteData['lain_1'],
+                'lain_2' => $noteData['lain_2'],
+                'lain_3' => $noteData['lain_3'],
+                'lain_4' => $noteData['lain_4'],
                 'total' => $noteData['total'], // Perhitungan total
                 'pelanggan_id' => $pelanggan->id
             ]);

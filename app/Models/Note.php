@@ -17,7 +17,10 @@ class Note extends Model
         'keterangan',
         'stnk_resmi',
         'jasa',
-        'lain_lain',
+        'lain_1',
+        'lain_2',
+        'lain_3',
+        'lain_4',
         'total',
         'pelanggan_id'
     ];
