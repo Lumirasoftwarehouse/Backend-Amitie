@@ -118,7 +118,7 @@ class HeaderController extends Controller
         $signature = sha1($YYYY . $username . $MM . $password . $DD);
     
         $headers = [
-            'Signature' => $signature,
+            'signature' => $signature,
             'Authorization' => 'Basic ' . base64_encode($username . ':' . $password),
             'Content-Type' => 'application/x-www-form-urlencoded',
         ];
