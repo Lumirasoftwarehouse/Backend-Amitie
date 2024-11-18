@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Note;
 use App\Models\Pelanggan;
+use App\Models\BiayaLain;
 
 class NoteController extends Controller
 {
@@ -28,20 +29,22 @@ class NoteController extends Controller
     public function detailNota($id)
     {
         // Ambil data pelanggan beserta nota-nya
-        $pelanggans = Pelanggan::with('notes')->find($id);
+        $pelanggans = Pelanggan::with('notes.biayaLain')->find($id);
     
         return response()->json(['message' => 'berhasil', 'data' => $pelanggans], 200);
     }
-    
 
     // Menampilkan semua catatan
     public function listNote()
     {
-        // $dataNotes = Note::get();
-        $pelanggans = Pelanggan::with('notes')->get();
-
-        return response()->json(['message' => 'success', 'data' => $pelanggans]);
+        $pelanggans = Pelanggan::with(['notes.biayaLain'])->get();
+    
+        return response()->json([
+            'message' => 'success',
+            'data' => $pelanggans
+        ]);
     }
+    
 
     // Fungsi untuk menambah catatan (Insert)
     public function createNote(Request $request)
@@ -57,10 +60,10 @@ class NoteController extends Controller
             'notes.*.keterangan' => 'required',
             'notes.*.stnk_resmi' => 'required',
             'notes.*.jasa' => 'required',
-            'notes.*.lain_1' => 'required',
-            'notes.*.lain_2' => 'required',
-            'notes.*.lain_3' => 'required',
-            'notes.*.lain_4' => 'required'
+            // 'notes.*.lain_1' => 'required',
+            // 'notes.*.lain_2' => 'required',
+            // 'notes.*.lain_3' => 'required',
+            // 'notes.*.lain_4' => 'required'
         ]);
 
         $pelanggan = new Pelanggan();
@@ -78,10 +81,10 @@ class NoteController extends Controller
                 'keterangan' => $noteData['keterangan'],
                 'stnk_resmi' => $noteData['stnk_resmi'],
                 'jasa' => $noteData['jasa'],
-                'lain_1' => $noteData['lain_1'],
-                'lain_2' => $noteData['lain_2'],
-                'lain_3' => $noteData['lain_3'],
-                'lain_4' => $noteData['lain_4'],
+                // 'lain_1' => $noteData['lain_1'],
+                // 'lain_2' => $noteData['lain_2'],
+                // 'lain_3' => $noteData['lain_3'],
+                // 'lain_4' => $noteData['lain_4'],
                 'total' => $noteData['total'], // Perhitungan total
                 'pelanggan_id' => $pelanggan->id
             ]);
@@ -89,6 +92,67 @@ class NoteController extends Controller
     
         return response()->json(['message' => 'Notes created successfully']);
     }
+
+    public function createNewNote(Request $request)
+    {
+        // Validasi untuk menerima array input
+        $validateData = $request->validate([
+            'header' => 'required|array',
+            'header.alamat' => 'required|string',
+            'header.tanggal' => 'required|date',
+            'header.pelanggan' => 'required|string',
+            'notes' => 'required|array',
+            'notes.*.proses' => 'required|string',
+            'notes.*.atas_nama' => 'required|string',
+            'notes.*.kendaraan' => 'required|string',
+            'notes.*.no_polisi' => 'required|string',
+            'notes.*.keterangan' => 'required|string',
+            'notes.*.stnk_resmi' => 'required',
+            'notes.*.jasa' => 'required',
+            'notes.*.total' => 'required|numeric',
+            'notes.*.biaya_lain' => 'required|array',
+            // 'notes.*.biaya_lain.*.label' => 'required|string',
+            // 'notes.*.biaya_lain.*.nominal' => 'required|numeric'
+        ]);
+    
+        // Buat pelanggan baru
+        $pelanggan = Pelanggan::create([
+            'alamat' => $validateData['header']['alamat'],
+            'tanggal' => $validateData['header']['tanggal'],
+            'nama_pelanggan' => $validateData['header']['pelanggan']
+        ]);
+    
+        // Iterasi melalui array notes untuk menyimpan beberapa Note dan BiayaLain
+        foreach ($validateData['notes'] as $noteData) {
+            $note = Note::create([
+                'proses' => $noteData['proses'],
+                'atas_nama' => $noteData['atas_nama'],
+                'kendaraan' => $noteData['kendaraan'],
+                'no_polisi' => $noteData['no_polisi'],
+                'keterangan' => $noteData['keterangan'],
+                'stnk_resmi' => $noteData['stnk_resmi'],
+                'jasa' => $noteData['jasa'],
+                'total' => $noteData['total'], // Perhitungan total
+                'pelanggan_id' => $pelanggan->id
+            ]);
+    
+            // Simpan biaya lain-lain untuk Note ini
+            foreach ($noteData['biaya_lain'] as $biayaLainData) {
+                if ($biayaLainData['nominal'] != 0) {
+                    # code...
+                    BiayaLain::create([
+                        'label' => $biayaLainData['label'],
+                        'nominal' => $biayaLainData['nominal'],
+                        'id_note' => $note->id // Menggunakan ID Note yang baru dibuat
+                    ]);
+                }
+            }
+        }
+    
+        return response()->json(['message' => 'Notes created successfully']);
+    }
+    
+
     
 
     // Fungsi untuk mengupdate catatan (Update)

@@ -37,8 +37,10 @@ Route::group([
     Route::post('update', [NoteController::class,'updateNote']);
     Route::delete('delete/{id}', [NoteController::class,'deleteNote']);
     Route::delete('delete-pelanggan/{id}', [NoteController::class,'deletePelanggan']);
-   
+    
   });
+
+  Route::post('create-new', [NoteController::class,'createNewNote']);
   
 
   Route::middleware('auth.basic')->group(function () {

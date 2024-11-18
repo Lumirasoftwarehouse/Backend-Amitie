@@ -30,4 +30,11 @@ class Note extends Model
     {
         return $this->belongsTo(Pelanggan::class);
     }
+
+    public function biayaLain()
+    {
+        return $this->hasMany(BiayaLain::class, 'id_note', 'id');
+    }
+
+
 }

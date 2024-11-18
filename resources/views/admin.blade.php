@@ -40,38 +40,7 @@
     <body class="antialiased">
     <div class="container mt-4">
         <div class="card">
-            <div class="card-body">
-                <div class="text-center mb-4">
-                    <h1 class="h3">Data Pelanggan: {{ $pelanggans->nama_pelanggan }}</h1>
-                    <p class="mb-1">Alamat: {{ $pelanggans->alamat }}</p>
-                    <p>Tanggal: {{ $pelanggans->tanggal }}</p>
-                </div>
-
-                <h2 class="h4 mb-3">Daftar Nota</h2>
-                @foreach ($pelanggans->notes as $key => $note)
-                <div class="row border-bottom pb-3 mb-3 nota-item">
-                    <!-- kiri -->
-                    <div class="col-6">
-                        <div><span>Proses:</span> {{ $note->proses }}</div>
-                        <div><span>Atas Nama:</span> {{ $note->atas_nama }}</div>
-                        <div><span>Kendaraan:</span> {{ $note->kendaraan }}</div>
-                        <div><span>No Polisi:</span> {{ $note->no_polisi }}</div>
-                        <div><span>Keterangan:</span> {{ $note->keterangan }}</div>
-                    </div>
-                    <!-- kanan -->
-                    <div class="col-6">
-                        <div><span>STNK Resmi:</span> Rp {{ number_format($note->stnk_resmi, 0, ',', '.') }}</div>
-                        <div><span>Jasa:</span> Rp {{ number_format($note->jasa, 0, ',', '.') }}</div>
-                        <div><span>Lain-lain:</span> Rp {{ number_format($note->lain_lain, 0, ',', '.') }}</div>
-                        <div><span>Total:</span> Rp {{ number_format($note->total, 0, ',', '.') }}</div>
-                    </div>
-                </div>
-                @endforeach
-
-                <div class="text-end mt-4">
-                    <h3 class="h5">Jumlah Keseluruhan: Rp {{ number_format($pelanggans->notes->sum('total'), 0, ',', '.') }}</h3>
-                </div>
-            </div>
+           
         </div>
     </div>
 
