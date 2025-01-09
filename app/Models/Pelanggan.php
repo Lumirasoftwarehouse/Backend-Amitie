@@ -9,7 +9,7 @@ class Pelanggan extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['alamat', 'tanggal', 'nama_pelanggan'];
+    protected $fillable = ['tanggal', 'nama_pelanggan'];
 
     // Relasi one-to-many dengan Notes
     public function notes()

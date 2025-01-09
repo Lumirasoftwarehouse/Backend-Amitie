@@ -98,7 +98,7 @@ class NoteController extends Controller
         // Validasi untuk menerima array input
         $validateData = $request->validate([
             'header' => 'required|array',
-            'header.alamat' => 'required|string',
+            // 'header.alamat' => 'required|string',
             'header.tanggal' => 'required|date',
             'header.pelanggan' => 'required|string',
             'notes' => 'required|array',
@@ -117,7 +117,7 @@ class NoteController extends Controller
     
         // Buat pelanggan baru
         $pelanggan = Pelanggan::create([
-            'alamat' => $validateData['header']['alamat'],
+            // 'alamat' => $validateData['header']['alamat'],
             'tanggal' => $validateData['header']['tanggal'],
             'nama_pelanggan' => $validateData['header']['pelanggan']
         ]);
@@ -160,7 +160,7 @@ class NoteController extends Controller
     {
         // Validasi input
         $validateData = $request->validate([
-            'alamat' => 'required',
+            // 'alamat' => 'required',
             'tanggal' => 'required',
             'pelanggan' => 'required',
             'proses' => 'required',
@@ -182,7 +182,7 @@ class NoteController extends Controller
 
         // Update data catatan
         $note->update([
-            'alamat' => $validateData['alamat'],
+            // 'alamat' => $validateData['alamat'],
             'tanggal' => $validateData['tanggal'],
             'pelanggan' => $validateData['pelanggan'],
             'proses' => $validateData['proses'],

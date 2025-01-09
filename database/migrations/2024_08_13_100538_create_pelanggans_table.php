@@ -15,7 +15,6 @@ class CreatePelanggansTable extends Migration
     {
         Schema::create('pelanggans', function (Blueprint $table) {
             $table->id();
-            $table->string('alamat');
             $table->date('tanggal');
             $table->string('nama_pelanggan');
             $table->timestamps();
